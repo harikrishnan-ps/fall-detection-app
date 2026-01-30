@@ -7,43 +7,7 @@
   "client": [
     {
       "client_info": {
-        "mobilesdk_app_id": "1:532214768813:android:6e341d3b6ad7696bbc5224",
-        "android_client_info": {
-          "package_name": "com.android.application"
-        }
-      },
-      "oauth_client": [
-        {
-          "client_id": "532214768813-cj9o84sf014l1bfda1bkjbhnv4nbcmki.apps.googleusercontent.com",
-          "client_type": 3
-        }
-      ],
-      "api_key": [
-        {
-          "current_key": "AIzaSyBjJ3s1YaHWt-JlkqdGrXdSvkL3ND1N10w"
-        }
-      ],
-      "services": {
-        "appinvite_service": {
-          "other_platform_oauth_client": [
-            {
-              "client_id": "532214768813-cj9o84sf014l1bfda1bkjbhnv4nbcmki.apps.googleusercontent.com",
-              "client_type": 3
-            },
-            {
-              "client_id": "532214768813-6bh1jf001h46tsl6571lrni4u4v8ss76.apps.googleusercontent.com",
-              "client_type": 2,
-              "ios_info": {
-                "bundle_id": "com.example.fallDetectionApp"
-              }
-            }
-          ]
-        }
-      }
-    },
-    {
-      "client_info": {
-        "mobilesdk_app_id": "1:532214768813:android:d0db9054af5e2ab7bc5224",
+        "mobilesdk_app_id": "1:532214768813:android:422d9b2380fad469bc5224",
         "android_client_info": {
           "package_name": "com.example.fall_detection_app"
         }
