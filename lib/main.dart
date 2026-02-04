@@ -10,6 +10,8 @@ import 'screens/login_screen.dart';
 import 'screens/register_screen.dart';
 import 'screens/person_dashboard.dart';
 import 'screens/caregiver_dashboard.dart';
+import 'screens/add_person_screen.dart';
+import 'screens/add_caregiver_screen.dart';
 import 'screens/settings_screen.dart';
 
 void main() async {
@@ -70,6 +72,8 @@ class FallDetectionApp extends StatelessWidget {
               '/register': (context) => const RegisterScreen(),
               '/person-dashboard': (context) => const PersonDashboard(),
               '/caregiver-dashboard': (context) => const CaregiverDashboard(),
+              '/add-person': (_) => const AddPersonScreen(),
+              '/add-caregiver': (_) => const AddCaregiverScreen(),
               '/settings': (context) => const SettingsScreen(),
             },
             

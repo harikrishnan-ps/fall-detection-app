@@ -317,7 +317,7 @@ class _PersonDashboardState extends State<PersonDashboard> {
                               const SizedBox(height: 16),
                               TextButton(
                                 onPressed: () {
-                                  // Navigate to add caregiver screen
+                                  Navigator.pushNamed(context, '/add-caregiver');
                                 },
                                 child: const Text('Add Caregiver'),
                               ),

@@ -232,4 +232,105 @@ class DatabaseService {
       return null;
     }
   }
+
+  Future<String> linkUsersByEmail({
+  required String caregiverId,
+  required String email,
+}) async {
+  try {
+    // 1. Find target user
+    final person = await getUserByEmail(email);
+
+    if (person == null) {
+      return 'No user found with this email';
+    }
+
+    if (person.uid == caregiverId) {
+      return 'You cannot add yourself';
+    }
+
+    // 2. Get caregiver
+    final caregiver = await getUser(caregiverId);
+
+    if (caregiver == null) {
+      return 'Caregiver account not found';
+    }
+
+    // 3. Prevent duplicates
+    if (caregiver.linkedUsers.contains(person.uid)) {
+      return 'User already linked';
+    }
+
+    // 4. Update BOTH users
+    final updatedCaregiver = caregiver.copyWith(
+      linkedUsers: [...caregiver.linkedUsers, person.uid],
+    );
+
+    final updatedPerson = person.copyWith(
+      linkedUsers: [...person.linkedUsers, caregiver.uid],
+    );
+
+    await updateUser(updatedCaregiver);
+    await updateUser(updatedPerson);
+
+    return 'success';
+  } catch (e) {
+    return 'Error: $e';
+  }
+}
+
+Future<String> linkCaregiverByEmail({
+  required String personId,
+  required String email,
+}) async {
+  try {
+    final snapshot = await _firestore
+        .collection(AppConstants.usersCollection)
+        .where('email', isEqualTo: email.trim())
+        .get();
+
+    if (snapshot.docs.isEmpty) {
+      return 'No user found with this email';
+    }
+
+    final caregiver = UserModel.fromMap(
+      snapshot.docs.first.data() as Map<String, dynamic>,
+    );
+
+    if (caregiver.role != UserRole.caregiver) {
+      return 'This user is not a caregiver account';
+    }
+
+    if (caregiver.uid == personId) {
+      return 'You cannot add yourself';
+    }
+
+    final person = await getUser(personId);
+    if (person == null) return 'Profile missing';
+
+    if (person.linkedUsers.contains(caregiver.uid)) {
+      return 'Caregiver already linked';
+    }
+
+    // Update both sides
+    await _firestore
+        .collection(AppConstants.usersCollection)
+        .doc(personId)
+        .update({
+      'linkedUsers': FieldValue.arrayUnion([caregiver.uid])
+    });
+
+    await _firestore
+        .collection(AppConstants.usersCollection)
+        .doc(caregiver.uid)
+        .update({
+      'linkedUsers': FieldValue.arrayUnion([personId])
+    });
+
+    return 'success';
+  } catch (e) {
+    return 'Error: $e';
+  }
+}
+
 }
